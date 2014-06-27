@@ -4,7 +4,7 @@
 
 	function add_row() {
 		row += 1;
-		var str = "<span id=\"field_"+row+"\"><select name=\"boolean["+row+"]\"><option value=\"and\">and</option><option value=\"or\">or</option></select><br><select name=\"field["+row+"]\"><option value=\"first_name\">First name</option><option value=\"last_name\">Last name</option><option value=\"owner\">Owner, Purchasers, etc.</option><option value=\"race\">Race</option><option value=\"gender\">Gender</option><option value=\"birth_year\">Birth year</option><option value=\"record_year\">Record year</option></select></select> <select name=\"operator["+row+"]\"><option value=\"=\">=</option><option value=\"&gt;=\">&gt;=</option><option value=\"&lt;=\">&lt;=</option><option value=\"includes\">includes</option></select><input name=\"value["+row+"]\"><%#= image_tag('minus.png') %><br></span>";
+		var str = "<span id=\"field_"+row+"\"><select name=\"boolean["+row+"]\"><option value=\"and\">and</option><option value=\"or\">or</option></select><br><select name=\"field["+row+"]\"><option value=\"first_name\">First name</option><option value=\"last_name\">Last name</option><option value=\"owner\">Owner, Purchasers, etc.</option><option value=\"mother\">Mother</option><option value=\"race\">Race</option><option value=\"gender\">Gender</option><option value=\"birth_year\">Birth year</option><option value=\"record_year\">Record year</option></select></select> <select name=\"operator["+row+"]\"><option value=\"=\">=</option><option value=\"&gt;=\">&gt;=</option><option value=\"&lt;=\">&lt;=</option><option value=\"includes\">includes</option></select><input name=\"value["+row+"]\"><%#= image_tag('minus.png') %><br></span>";
 		$("#data1").append(str);
 	}
 </script>
@@ -14,6 +14,7 @@
 	<select name="field[0]"><options></options><option value="first_name">First name</option>
 	<option value="last_name">Last name</option>
 	<option value="owner">Owner, Purchases, etc.</option>
+	<option value="mother">Mother</option>
 	<option value="race">Race</option>
 	<option value="gender">Gender</option>
 	<option value="birth_year">Birth year</option>

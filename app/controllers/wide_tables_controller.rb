@@ -118,6 +118,17 @@ class WideTablesController < ApplicationController
       @search_terms += ', ' if @search_terms != ''
       @search_terms += "owner, purchaser, etc = #{params[:owner_purchaser_etc]}"
     end
+    if params[:mother] != nil and params[:mother] != ''
+      str += ' and ' if str != ''
+      if params[:use_soundex] == '1'
+        str += 'mother sounds like ?'
+      else
+        str += 'mother like ?'
+      end
+      values << "%#{params[:mother]}%"
+      @search_terms += ', ' if @search_terms != ''
+      @search_terms += "mother = #{params[:mother]}"
+    end
     if params[:birth_year] != nil and params[:birth_year] != ''
       start = params[:birth_year].to_i
       stop = start

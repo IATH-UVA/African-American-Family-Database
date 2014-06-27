@@ -99,9 +99,9 @@ class WideTablesController < ApplicationController
     if params[:last_name] != nil and params[:last_name] != ''
       str += ' and ' if str != ''
       if params[:use_soundex] == '1'
-        str += '(last_name sounds like ? or src_table_id=22)'
+        str += 'last_name sounds like ?'
       else
-        str += '(last_name like ? or src_table_id=22)'
+        str += 'last_name like ?'
       end
       values << "%#{params[:last_name]}%"
       @search_terms += ', ' if @search_terms != ''

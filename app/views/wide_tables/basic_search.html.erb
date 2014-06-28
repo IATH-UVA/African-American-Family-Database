@@ -1,5 +1,10 @@
 <%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true do %>
 
+	<div class="inputs">
+		<input type="submit" value="Search"/>
+		<input type="reset" value="Clear"/>
+		<%= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').load('#{url_for(:action => 'adv_search_tables')}')")%>
+	</div>
 <table>
 	<tr>
 		<td>First&nbsp;name</td>

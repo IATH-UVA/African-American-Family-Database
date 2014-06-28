@@ -1,4 +1,4 @@
-<%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true do %>
+<%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true, :html => {:onSubmit => "$('#search_results').html('<h3>Searching&hellip;</h3>');return false;"} do %>
 
 	<div class="inputs">
 		<input type="submit" value="Search"/>

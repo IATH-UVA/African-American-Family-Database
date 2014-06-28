@@ -9,7 +9,7 @@
 	}
 </script>
 
-<%= form_tag({:action => 'adv_search'}, :remote => true) do %>
+<%= form_tag({:action => 'adv_search'}, :remote => true, :onSubmit => "$('#search_results').html('<h3>Searching&hellip;</h3>');return false;") do %>
 			<%= submit_tag('Search')%> 
 			<%= link_to_function(button_tag('Reset'), "$('#search_criteria').load('#{url_for(:action => 'adv_search_tables')}')")%>
 			<%= link_to_function(button_tag('Basic Search'), "$('#search_criteria').load('#{url_for(:action => 'basic_search')}')")%>

@@ -413,15 +413,16 @@ class WideTablesController < ApplicationController
   
   def update_comments
     # debugger
-    w = WideTable.find params[:id]
-    c = w.comments.find(:first, :conditions => "user_id = #{current_user.id}")
+    @wide_table = WideTable.find params[:id]
+    c = @wide_table.comments.find(:first, :conditions => "user_id = #{current_user.id}")
     if c == nil
       c = Comment.new
       c.user = current_user
-      c.wide_table = w
+      c.wide_table = @wide_table
     end
     c.comment = params[:comments]
     c.save
-    render :text => '', :layout => false
+    render :file => 'wide_tables/_show_comments.js.erb'
   end
+
 end 

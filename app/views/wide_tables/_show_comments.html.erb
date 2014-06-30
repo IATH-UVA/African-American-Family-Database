@@ -1,0 +1,44 @@
+<% a = @wide_table.comments.find(:all) || [] %>
+<% c = @wide_table.comments.find(:first, :conditions => "user_id = #{current_user.id}") %>
+<% if c %>
+	<% if c.comment == nil or c.comment == '' %>
+		<% currentUserHasComment = false %>
+	<% else %>
+		<% currentUserHasComment = true %>
+	<% end %>
+<% else %>
+	<% c = Comment.new %>
+	<% c.comment = '' %>
+	<% currentUserHasComment = false %>
+<% end %>
+<% button_label = if currentUserHasComment then 'Edit and replace' else 'Add' end %>
+<% button_label += ' your own comment' %>
+<% cancel_label = 'Cancel ' %>
+<% cancel_label += if currentUserHasComment then 'edit' else ' new comment' end %>
+
+<% n = 0 %>
+<% if a.length > 0 %>
+	<% a.each do |c| %>
+		<% if c.comment != nil and c.comment != '' %>
+			<% n = n + 1 %>
+			<%= c.comment %> (<%= c.user.email %>)<br/>
+		<% end %>
+	<% end %>
+<% end %>
+<% if n == 0 %>
+	<i>No comments have been saved for this record.</i><br/>
+<% end %>
+
+<div id="comment_form_before" style="display:inline">
+<%= link_to_function( button_tag("#{button_label}"), "$('#comment_form_container').css('display','inline');$('#comment_form_before').css('display','none')" ) %>
+</div>
+<div id="comment_form_container" style="display:none">
+<%= form_tag({:action => 'update_comments', :id => @wide_table.id}, :remote => true, :id => 'comment_form', :onSubmit => "$('#comment_form_after').css('display','inline');$('#comment_form_container').css('display','none')") do%>
+  <textarea name="comments" id="comment_form_textarea" cols="50" rows="5"><%= c.comment %></textarea><br>
+        <%= submit_tag('Save your comment') %>
+	<%= link_to_function( button_tag("#{cancel_label}"), "$('#comment_form_before').css('display','inline');$('#comment_form_container').css('display','none');$('#comment_form_textarea').val('" + c.comment + "')" ) %>
+<% end %>
+</div>
+<div id="comment_form_after" style="display:none">
+<i>Saving your comment&hellip;</i>
+</div>

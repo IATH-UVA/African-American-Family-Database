@@ -70,7 +70,10 @@ class WideTablesController < ApplicationController
     end
     
     # debugger
-    @wide_tables = WideTable.find(:all, :conditions => [sql]+vals, :limit => 1000)
+    @wide_tables = WideTable.find(:all, :conditions => [sql]+vals)
+        # if @wide_tables were an AR::Relation object, we could end preceding line:  .page(params[:page]).per( params['perpage'] )
+        # instead @wide_tables.class == Array, so must instead add next line:
+    @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
     
     puts sql
     # debugger
@@ -208,7 +211,11 @@ class WideTablesController < ApplicationController
     
     conditions = [str] + values
     
-    @wide_tables = WideTable.find(:all, :conditions => conditions, :limit => 1000)
+    @wide_tables = WideTable.find(:all, :conditions => conditions)
+        # if @wide_tables were an AR::Relation object, we could end preceding line:  .page(params[:page]).per( params['perpage'] ) . . .
+    @nResultsTotal = @wide_tables.length
+        # . . . instead @wide_tables.class == Array, so must instead add next line:
+    @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
     # render :update do |page|
     #   # page.replace 'search_results', 'results'
     # end
@@ -237,7 +244,10 @@ class WideTablesController < ApplicationController
       order = 'src_table_row_num asc'
     end
     @value = [params[:field], params[:id]]
-    @wide_tables = WideTable.find(:all, :conditions => ["#{params[:field]} = ?", params[:id]], :order => order, :limit => 1000)
+    @wide_tables = WideTable.find(:all, :conditions => ["#{params[:field]} = ?", params[:id]], :order => order)
+        # if @wide_tables were an AR::Relation object, we could end preceding line:  .page(params[:page]).per( params['perpage'] )
+        # instead @wide_tables.class == Array, so must instead add next line:
+    @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
     @search_terms = "#{params[:field].humanize}: #{params[:id]}"
     respond_to do |format| 
       format.js do
@@ -251,7 +261,10 @@ class WideTablesController < ApplicationController
       order = 'src_table_row_num asc'
     end
     @value = [params[:field], params[:id]]
-    @wide_tables = WideTable.find(:all, :conditions => ["#{params[:field]} = ?", params[:id]], :order => order, :limit => 1000)
+    @wide_tables = WideTable.find(:all, :conditions => ["#{params[:field]} = ?", params[:id]], :order => order)
+        # if @wide_tables were an AR::Relation object, we could end preceding line:  .page(params[:page]).per( params['perpage'] )
+        # instead @wide_tables.class == Array, so must instead add next line:
+    @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
     @search_terms = "#{params[:field].humanize}: #{params[:id]}"
     respond_to do |format| 
       format.js do

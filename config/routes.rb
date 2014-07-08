@@ -19,6 +19,7 @@ AafDb::Application.routes.draw do
     collection do
       get 'search_tables'
       post 'find_results'
+      get 'find_results' # for Kaminari pagination
       get 'show_result'
       get 'update_results'
       get 'show_next'

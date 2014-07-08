@@ -4,8 +4,21 @@
 		<div class="inputs">
 			<input type="submit" value="Search"/>
 			<input type="reset" value="Clear"/>
+			<% if Rails.application.config.per_pages_selected == nil %>
+			<input name="perpage" type="hidden" value="<%= Rails.application.config.per_pages[0].value %>"/>
+			<% else %>
+			Show&nbsp;<select name="perpage" id="perpage" onchange="if($('#perpage_remote_ctrl').val() !== $(this).val()) $('#perpage_remote_ctrl').val( $(this).val() )">
+			<% i = 0 %>
+			<% Rails.application.config.per_pages_values.each do |ppv|%>
+				<% selectedAsText = (i == Rails.application.config.per_pages_selected) ? "selected='true'" : '' %>
+				<option value="<%= ppv %>" <%= selectedAsText %>><%= Rails.application.config.per_pages_labels[i] %></option>
+				<% i = i + 1 %>
+			<% end %>
+			</select>
+			<% end %>
 			<%= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').html(\"#{escape_javascript render(:file => 'wide_tables/adv_search_tables.html.erb')}\")")%>
 		</div>
+
 	<table>
 		<tr>
 			<td>First&nbsp;name</td>
@@ -77,6 +90,16 @@
 			<!-- <span style="float:right;"> -->
 			<input type="submit" value="Search"/>
 			<input type="reset" value="Clear"/>
+			<% if Rails.application.config.per_pages_selected != nil %>
+			Show&nbsp;<select id="perpage_remote_ctrl" onchange="if($('#perpage').val() !== $(this).val()) $('#perpage').val( $(this).val() )">
+			<% i = 0 %>
+			<% Rails.application.config.per_pages_values.each do |ppv|%>
+				<% selectedAsText = (i == Rails.application.config.per_pages_selected) ? "selected='true'" : '' %>
+				<option value="<%= ppv %>" <%= selectedAsText %>><%= Rails.application.config.per_pages_labels[i] %></option>
+				<% i = i + 1 %>
+			<% end %>
+			</select>
+			<% end %>
 			<%= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').html(\"#{escape_javascript render(:file => 'wide_tables/adv_search_tables.html.erb')}\")")%>
 			<!-- </span> -->
 		</div>

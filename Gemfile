@@ -36,3 +36,5 @@ gem 'render_component_vho'
 gem 'active_scaffold_vho'
 
 gem 'devise'
+
+gem 'kaminari'

@@ -44,5 +44,12 @@ module AafDb
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Configure which pagination items-per-page values are available as html ui options for user to single-select.
+    # A value of 'all' is replaced programmatically by an appropriate large value, e.g., 999999, to force pagination off.
+    config.per_pages_selected = 2 # this is javascript index, based at 0 for first element
+    config.per_pages_values = [ 25, 100, 1000 ] #, 10000, 9999999 ]
+    config.per_pages_labels = [ '25 items per page', '100 items per page', '1000 items per page' ] #, '10000 items per page', 'all items on a single page' ]
+    # config.per_pages = [ {value => 25, label => '25 items per page'}, {value => 100, label => '100 items per page'}, {value => 1000, label => '1000 items per page'}, {value => 10000, label => '10000 items per page'}, {value => 'all', label => 'all items on a single page'} ]
   end
 end

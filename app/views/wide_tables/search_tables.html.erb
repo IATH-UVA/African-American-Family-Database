@@ -1,7 +1,7 @@
 <div id="left_column">
 <div id="search_criteria">
 	<%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true, :html => {:onSubmit => "$('#search_results').html('<h3>Searching&hellip;</h3>');return false;"} do %>
-		<div class="inputs">
+		<!-- div class="inputs">
 			<input type="submit" value="Search"/>
 			<input type="reset" value="Clear"/>
 			<% if Rails.application.config.per_pages_selected == nil %>
@@ -17,7 +17,7 @@
 			</select>
 			<% end %>
 			<%= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').html(\"#{escape_javascript render(:file => 'wide_tables/adv_search_tables.html.erb')}\")")%>
-		</div>
+		</div -->
 
 	<table>
 		<tr>

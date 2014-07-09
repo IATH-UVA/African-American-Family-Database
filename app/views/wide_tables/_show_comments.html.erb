@@ -1,8 +1,9 @@
 <% a = @wide_table.comments.find(:all) || [] %>
 <% c = @wide_table.comments.find(:first, :conditions => "user_id = #{current_user.id}") %>
 <% if c %>
-	<% if c.comment == nil or c.comment == '' %>
+	<% if c.comment == nil or c.comment.strip.empty? %>
 		<% currentUserHasComment = false %>
+		<% c.comment = '' %>
 	<% else %>
 		<% currentUserHasComment = true %>
 	<% end %>
@@ -18,10 +19,10 @@
 
 <% n = 0 %>
 <% if a.length > 0 %>
-	<% a.each do |c| %>
-		<% if c.comment != nil and c.comment != '' %>
+	<% a.each do |e| %>
+		<% if e.comment != nil and not e.comment.strip.empty? %>
 			<% n = n + 1 %>
-			<%= c.comment %> (<%= c.user.email %>)<br/>
+			<%= e.comment %> (<%= e.user.email %>)<br/>
 		<% end %>
 	<% end %>
 <% end %>

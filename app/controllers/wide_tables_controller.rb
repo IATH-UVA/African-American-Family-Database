@@ -433,7 +433,7 @@ class WideTablesController < ApplicationController
       c.user = current_user
       c.wide_table = @wide_table
     end
-    c.comment = params[:comments]
+    c.comment = params[:comments].strip
     c.save
     render :file => 'wide_tables/_show_comments.js.erb'
   end

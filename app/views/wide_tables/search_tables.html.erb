@@ -151,27 +151,38 @@
 				<span id="record_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="record_year_end" size="10"/></span>
 			</td>
 		</tr>
+		<tr>
+			<td>Race</td>
+			<td colspan="2">
+				<input type="checkbox" name="race[]" value="B">Black</input>
+				<input type="checkbox" name="race[]" value="W">White</input>
+				<input type="checkbox" name="race[]" value="M">Mulatto</input>
+			</td>
+		</tr>
+		<tr>
+			<td>Gender</td>
+			<td colspan="2">
+				<input type="checkbox" name="gender[]" value="female">female</input>
+				<input type="checkbox" name="gender[]" value="male">male</input>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">Source</td>
+		</tr>
+		<% @tables.each do |t|%>
+		<tr>
+			<td colspan="3" style="white-space: nowrap;">
+				<input type="checkbox" name="tables[]" value="<%= t.id %>" title="(<%= t.id %>)<%= t.title%>">
+				(<%= t.id %>)&nbsp;<%= t.title%>
+			</td>
+		</tr>
+		<% end %>
 		</table>
 		<!--
 		<p class="note-text">For each of the following options, uncheck all to select all records.  
 		Select one or more to narrow your search to records that contain any of the checked terms.</p>
 		-->
 		<div class="inputs">
-			<b>Race</b><br/>
-			<input type="checkbox" name="race[]" value="B">black (B)</input>
-			<input type="checkbox" name="race[]" value="W">white (W)</input>
-			<input type="checkbox" name="race[]" value="M">mulatto (M)</input>	
-			<br/>
-			<b>Gender</b><br/>
-			<input type="checkbox" name="gender[]" value="female">female</input>
-			<input type="checkbox" name="gender[]" value="male">male</input>
-			<br/>
-			<b>Source Table</b><br/>
-			<% @tables.each do |t|%>
-				<input type="checkbox" name="tables[]" value="<%= t.id %>">(<%= t.id %>)<%= t.title%><br/>
-			<% end %>
-			<br/>
-			<!-- <span style="float:right;"> -->
 			<input type="submit" value="Search"/>
 			<input type="reset" value="Clear"/>
 			<% if Rails.application.config.per_pages_selected == nil %>
@@ -188,8 +199,7 @@
 			<% end %>
 			</select>
 			<% end %>
-			<%= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').html(\"#{escape_javascript render(:file => 'wide_tables/adv_search_tables.html.erb')}\")")%>
-			<!-- </span> -->
+			<!-- %= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').html(\"#{escape_javascript render(:file => 'wide_tables/adv_search_tables.html.erb')}\")")% -->
 		</div>
 	<% end %>
 </div>

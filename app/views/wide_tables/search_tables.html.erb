@@ -177,6 +177,23 @@
 			</td>
 		</tr>
 		<% end %>
+		<tr>
+			<td>Search&nbsp;Terms</td>
+			<td colspan="2" style="text-align:right;">
+				<select name="search_terms_op" onchange="$('.search_terms_extra').css('display', (0 == this.value.indexOf('freetext')) ? 'table-row' : 'none');">
+
+					<option value="no_freetext" selected="true">include only the terms above</option>
+					<optgroup label="advanced">
+						<option value="freetext">include also your free-text terms here:</option>
+					</optgroup>
+				</select>
+			</td>
+		</tr>
+		<tr class="search_terms_extra extra" style="display:none">
+			<td colspan="3" style="white-space: nowrap;">
+				<textarea name="search_terms" cols="50" rows="5"></textarea>
+			</td>
+		</tr>
 		</table>
 		<!--
 		<p class="note-text">For each of the following options, uncheck all to select all records.  

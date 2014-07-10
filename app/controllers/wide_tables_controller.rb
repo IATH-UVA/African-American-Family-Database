@@ -230,6 +230,12 @@ class WideTablesController < ApplicationController
       @search_terms += "Source table = #{r_str}"
     end
 
+    if defined?(params[:search_terms_op]) && params[:search_terms_op] == 'freetext'
+      str = str + ' and ( '
+      str = str + params[:search_terms]
+      str = str + ' )'
+    end
+
     conditions = [str] + values
  
     @wide_tables = WideTable.find(:all, :conditions => conditions)

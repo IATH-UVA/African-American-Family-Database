@@ -1,13 +1,13 @@
 <div id="left_column">
 <div id="search_criteria">
 	<%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true, :html => {:onSubmit => "$('#search_results').html('<h3>Searching&hellip;</h3>');return false;"} do %>
-		<!-- div class="inputs">
+		<!-- uncomment this div to add duplicate controls at top of left (search) pane
+		note that mode-change control (to advd search form) may need to be removed
+		<div class="inputs">
 			<input type="submit" value="Search"/>
 			<input type="reset" value="Clear"/>
-			<% if Rails.application.config.per_pages_selected == nil %>
-			<input name="perpage" type="hidden" value="<%= Rails.application.config.per_pages[0].value %>"/>
-			<% else %>
-			Show&nbsp;<select name="perpage" id="perpage" onchange="if($('#perpage_remote_ctrl').val() !== $(this).val()) $('#perpage_remote_ctrl').val( $(this).val() )">
+			<% if Rails.application.config.per_pages_selected != nil %>
+			Show&nbsp;<select id="perpage_remote_ctrl" onchange="if($('#perpage').val() !== $(this).val()) $('#perpage').val( $(this).val() )">
 			<% i = 0 %>
 			<% Rails.application.config.per_pages_values.each do |ppv|%>
 				<% selectedAsText = (i == Rails.application.config.per_pages_selected) ? "selected='true'" : '' %>
@@ -17,7 +17,8 @@
 			</select>
 			<% end %>
 			<%= link_to_function(button_tag('Advanced Search'), "$('#search_criteria').html(\"#{escape_javascript render(:file => 'wide_tables/adv_search_tables.html.erb')}\")")%>
-		</div -->
+		</div>
+		end commented-out div -->
 
 	<table>
 		<tr>
@@ -90,8 +91,12 @@
 			<!-- <span style="float:right;"> -->
 			<input type="submit" value="Search"/>
 			<input type="reset" value="Clear"/>
-			<% if Rails.application.config.per_pages_selected != nil %>
-			Show&nbsp;<select id="perpage_remote_ctrl" onchange="if($('#perpage').val() !== $(this).val()) $('#perpage').val( $(this).val() )">
+			<% if Rails.application.config.per_pages_selected == nil %>
+			<input name="perpage" type="hidden" value="<%= Rails.application.config.per_pages[0].value %>"/>
+			<% else %>
+			Show&nbsp;<select name="perpage" id="perpage">
+				<!-- uncomment this attr and knit back into preceding select element to add duplicate controls at top of left (search) pane
+				onchange="if($('#perpage_remote_ctrl').val() !== $(this).val()) $('#perpage_remote_ctrl').val( $(this).val() )" -->
 			<% i = 0 %>
 			<% Rails.application.config.per_pages_values.each do |ppv|%>
 				<% selectedAsText = (i == Rails.application.config.per_pages_selected) ? "selected='true'" : '' %>

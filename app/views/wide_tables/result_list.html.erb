@@ -17,6 +17,7 @@
 <% end %>
 <table id="result_table" class="tablesorter">
 	<thead>
+	<th>Record #</th>
 	<th>Source</th>
 	<th>Record Year</th>
 	<th>First Name</th>
@@ -28,11 +29,11 @@
 	<th>Location person</th>
 	<th>Mother</th>
 	<th>Father</th>
-	<th></th>
 	</thead>
 	<tbody>
 <% @wide_tables.each do |t| %>
 	<tr>
+		<td><%= link_to(t.id, {:action => 'show_result', :id => t.id}, :remote => true )%>
 		<td><%= t.src_table_id %></td>
 		<td><%= t.record_year %></td>
 		<td><%= t.first_name %></td>
@@ -44,7 +45,6 @@
 		<td><%= t.location_person %></td>
 		<td><%= t.mother %></td>
 		<td><%= t.father %></td>
-		<td><%= link_to('Show', {:action => 'show_result', :id => t.id}, :remote => true )%>
 <% end %>
 	</tbody>
 </table>

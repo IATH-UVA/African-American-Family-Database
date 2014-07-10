@@ -3,6 +3,11 @@
 <% else %>
 <h3>Searched:  <%= @search_terms %></h3>
 <% end %>
+<% if @error_message != nil && @error_message != '' %>
+<pre>
+<%= @error_message %>
+</pre>
+<% else %>
 <%= page_entries_info @wide_tables %><br/>
 <span title="Go to another results page.  (Scroll below current page results for a page number not here.)"><%= paginate @wide_tables, :left => 3, :window => 3, :right => 3, :params => {:controller => 'wide_tables', :action => 'find_results'}, :remote => true %></span>
 <% if @value != nil %>
@@ -51,3 +56,4 @@
 
 <%= page_entries_info @wide_tables %><br/>
 <span title="Go to another results page."><%= paginate @wide_tables, :left => @wide_tables.total_pages, :window => @wide_tables.total_pages, :right => @wide_tables.total_pages, :params => {:controller => 'wide_tables', :action => 'find_results'}, :remote => true %></span>
+<% end %>

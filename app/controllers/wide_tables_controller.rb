@@ -87,6 +87,7 @@ class WideTablesController < ApplicationController
     str = ''
     values = []
     @search_terms = ''
+    @error_message = ''
 
 =begin
     if params[:first_name] != nil and params[:first_name] != ''
@@ -230,24 +231,34 @@ class WideTablesController < ApplicationController
       @search_terms += "Source table = #{r_str}"
     end
 
-    if defined?(params[:search_terms_op]) && params[:search_terms_op] == 'freetext'
-      str = str + ' and ( '
-      str = str + params[:search_terms]
-      str = str + ' )'
+    if defined?(params[:search_terms_op]) && params[:search_terms_op] == 'freetext' && defined?(params[:search_terms])
+        search_terms_error_message = verify_search_terms(params[:search_terms])
+        @error_message += search_terms_error_message
+        if @error_message == ''
+          str = str + ' and ( '
+          str = str + params[:search_terms]
+          str = str + ' )'
+        end
     end
 
     conditions = [str] + values
 
-    if defined?(params[:results_order_op]) && params[:results_order_op] == 'freetext'
-      @wide_tables = WideTable.reorder(params[:results_order]).find(:all, :conditions => conditions)
-    else
-      @wide_tables = WideTable.find(:all, :conditions => conditions)
+    if defined?(params[:results_order_op]) && params[:results_order_op] == 'freetext' && defined?(params[:results_order])
+      results_order_error_message = verify_results_order(params[:results_order])
+      @error_message += results_order_error_message
     end
 
+    if @error_message == ''
+      if defined?(params[:results_order_op]) && params[:results_order_op] == 'freetext' && defined?(params[:results_order])
+        @wide_tables = WideTable.reorder(params[:results_order]).find(:all, :conditions => conditions)
+      else
+        @wide_tables = WideTable.find(:all, :conditions => conditions)
+      end
         # if @wide_tables were an AR::Relation object, we could end preceding lines:  .page(params[:page]).per( params['perpage'] ) . . .
-    @nResultsTotal = @wide_tables.length
+      @nResultsTotal = @wide_tables.length
         # . . . instead @wide_tables.class == Array, so must instead add next line:
-    @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
+      @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
+    end
 
     # render :update do |page|
     #   # page.replace 'search_results', 'results'
@@ -568,6 +579,55 @@ def intFieldSubcontroller(str, values, fieldname, operand1, operand2, operator, 
   end
 
   return str
+end
+
+
+def verify_search_terms(search_terms)
+  return ''
+end 
+
+def verify_results_order(results_order)
+  errors = 0
+  error_message0 = ''
+  error_message1 = ''
+  parts = results_order.split(',')
+  sep = '';
+  parts.each do |part|
+    part.strip!
+    pieces = part.split(/\s+/)
+    case pieces.length
+    when 1,2
+      case pieces[0]
+      when 'src_table_row_num','src_table_id','record_year','first_name','last_name','birth_year','race','gender','owner','location_person','mother','father'
+        error_message1 += sep + ' ' + pieces[0]
+      else
+        errors = errors + 1
+        error_message0 += "\n" + errors.to_s + ': expecting one of these:  src_table_row_num,src_table_id,record_year,first_name,last_name,birth_year,race,gender,owner,location_person,mother,father'
+        error_message1 += sep + ' ' + errors.to_s + '^ ' + pieces[0]
+      end
+      case pieces.length
+      when 2
+        case pieces[1]
+        when 'asc', 'desc'
+          error_message1 += ' ' + pieces[1]
+        else
+          errors = errors + 1
+          error_message0 += "\n" + errors.to_s + ': expecting nothing or one of these:  asc,desc'
+          error_message1 += sep + ' ' + errors.to_s + '^ ' + pieces[1]
+        end
+      end
+    else
+      errors = errors + 1
+      error_message0 += "\n" + errors.to_s + ': misc error'
+      error_message0 += sep + ' ' + errors.to_s + '^ ' + part
+    end
+    sep = ',' 
+  end
+  if errors == 0
+    return ''
+  else
+    return error_message1 + "\n" + error_message0
+  end
 end
 
 end 

@@ -126,29 +126,30 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Birth Year</td>
+			<td>Birth&nbsp;Year</td>
 			<td>
-				<input type="text" name="birth_year" size="10"/>
-				<select name="birth_year_range">
-					<option value="">+/- 0</option>
-					<option value="1">+/- 1 yr</option>
-					<option value="5">+/- 5 yrs</option>
-					<option value="10">+/- 10 yrs</option>
-					<option value="25">+/- 25 yrs</option>
-					<option value="50">+/- 50 yrs</option>
+				<select name="birth_year_op" onchange="$('#birth_year_end').css('display', (this.value === 'range') ? 'inline' : 'none')">
+					<option value="equals" selected="true">is exactly</option>
+					<option value="range">is between</option>
 				</select>
 			</td>
-		</tr>
-		<tr>
-			<td>Record&nbsp;Year</td>
-			<td>
-				<input type="text" name="record_year" size="10"/>
-				<input type="text" name="record_year_end" size="10"/>
+			<td style="white-space: nowrap;">
+				<input type="text" name="birth_year" size="10"/>
+				<span id="birth_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="birth_year_end" size="10"/></span>
 			</td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
-			<td class="tiny-text">Enter a second year to search for a range of years.</td>
+			<td>Rec&nbsp;Year</td>
+			<td>
+				<select name="record_year_op" onchange="$('#record_year_end').css('display', (this.value === 'range') ? 'inline' : 'none')">
+					<option value="equals" selected="true">is exactly</option>
+					<option value="range">is between</option>
+				</select>
+			</td>
+			<td style="white-space: nowrap;">
+				<input type="text" name="record_year" size="10"/>
+				<span id="record_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="record_year_end" size="10"/></span>
+			</td>
 		</tr>
 		</table>
 		<!--

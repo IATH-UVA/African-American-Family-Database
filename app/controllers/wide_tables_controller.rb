@@ -143,6 +143,7 @@ class WideTablesController < ApplicationController
     str = stringFieldSubcontroller(str, values, 'owner', params[:owner_purchaser_etc], params[:owner_end], params[:owner_op], 'owner, purchaser, etc')
     str = stringFieldSubcontroller(str, values, 'mother', params[:mother], params[:mother_end], params[:mother_op], 'mother')
 
+=begin
     if params[:birth_year] != nil and params[:birth_year] != ''
       start = params[:birth_year].to_i
       stop = start
@@ -174,6 +175,15 @@ class WideTablesController < ApplicationController
       str += 'record_year >= ? and record_year <= ?'
       values += [start,stop]
     end
+=end
+
+    # these were previously double params w the second param (for range end) sometimes unused.
+    # the semantics of the second param when used was different for the two uses.
+    # new formatting makes them consistent for the user and similar to the name fields.
+
+    str = intFieldSubcontroller(str, values, 'birth_year', params[:birth_year], params[:birth_year_end], params[:birth_year_op], 'Birth year')
+    str = intFieldSubcontroller(str, values, 'record_year', params[:record_year], params[:record_year_end], params[:record_year_op], 'Record year')
+
     if params[:race] != nil
       r_str = ''
       s_str = ''
@@ -507,4 +517,45 @@ def stringFieldSubcontroller(str, values, fieldname, operand1, operand2, operato
 
   return str
 end
+
+def intFieldSubcontroller(str, values, fieldname, operand1, operand2, operator, engFieldname)
+  case operator
+  when 'range'
+    if (operand1 != '' || operand2 != '')
+      @search_terms += ', ' if @search_terms != ''
+      @search_terms += "#{engFieldname} between #{operand1} and #{operand2}"
+      str += ' and ' if str != ''
+      str += '('
+
+      if operand1 != '' && operand2 != ''
+        str += "#{fieldname} between ? and ?"
+        values << operand1.to_i
+        values << operand2.to_i 
+      elsif operand1 != ''
+        str += "#{fieldname} >= ?"
+        values << operand1.to_i 
+      elsif operand2 != ''
+        str += "#{fieldname} <= ?"
+        values << operand2.to_i 
+      # else assert or fail
+      end
+
+      str += ')'
+    end
+  when 'equals'
+  if operand1 != '' # so any other operator w data supplied
+    @search_terms += ', ' if @search_terms != ''
+    @search_terms += "#{engFieldname} #{operator} = #{operand1}"
+    str += ' and ' if str != ''
+
+    operator = '='
+
+    str += "#{fieldname} #{operator} ?"
+    values << operand1.to_i
+  end
+  end
+
+  return str
+end
+
 end 

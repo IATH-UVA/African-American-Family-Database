@@ -237,12 +237,18 @@ class WideTablesController < ApplicationController
     end
 
     conditions = [str] + values
- 
-    @wide_tables = WideTable.find(:all, :conditions => conditions)
-        # if @wide_tables were an AR::Relation object, we could end preceding line:  .page(params[:page]).per( params['perpage'] ) . . .
+
+    if defined?(params[:results_order_op]) && params[:results_order_op] == 'freetext'
+      @wide_tables = WideTable.reorder(params[:results_order]).find(:all, :conditions => conditions)
+    else
+      @wide_tables = WideTable.find(:all, :conditions => conditions)
+    end
+
+        # if @wide_tables were an AR::Relation object, we could end preceding lines:  .page(params[:page]).per( params['perpage'] ) . . .
     @nResultsTotal = @wide_tables.length
         # . . . instead @wide_tables.class == Array, so must instead add next line:
     @wide_tables = Kaminari.paginate_array(@wide_tables).page(params[:page]).per( params['perpage'] )
+
     # render :update do |page|
     #   # page.replace 'search_results', 'results'
     # end

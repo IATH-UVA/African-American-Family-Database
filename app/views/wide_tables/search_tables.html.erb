@@ -194,6 +194,22 @@
 				<textarea name="search_terms" cols="50" rows="5"></textarea>
 			</td>
 		</tr>
+		<tr>
+			<td>Order&nbsp;Results</td>
+			<td colspan="2" style="text-align:right;">
+				<select name="results_order_op" onchange="$('.results_order_extra').css('display', (0 == this.value.indexOf('freetext')) ? 'table-row' : 'none');">
+					<option value="no_freetext" selected="true">in database record order</option>
+					<optgroup label="advanced">
+						<option value="freetext">by your free-text terms here:</option>
+					</optgroup>
+				</select>
+			</td>
+		</tr>
+		<tr class="results_order_extra extra" style="display:none">
+			<td colspan="3" style="white-space: nowrap;">
+				<textarea name="results_order" cols="50" rows="5"></textarea>
+			</td>
+		</tr>
 		</table>
 		<!--
 		<p class="note-text">For each of the following options, uncheck all to select all records.  

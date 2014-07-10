@@ -1,6 +1,6 @@
 <div id="left_column">
 <div id="search_criteria">
-	<%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true, :html => {:onSubmit => "$('#search_results').html('<h3>Searching&hellip;</h3>');return false;"} do %>
+       <%= form_for :wide_table, :url => {:action => 'find_results'}, :remote => true, :html => {:onreset=>"$('.extra').css('display', 'none');", :onSubmit => "$('#search_results').html('<h3>Searching&hellip;</h3>');return false;"} do %>
 		<!-- uncomment this div to add duplicate controls at top of left (search) pane
 		note that mode-change control (to advd search form) may need to be removed
 		<div class="inputs">
@@ -23,24 +23,106 @@
 	<table>
 		<tr>
 			<td>First&nbsp;name</td>
-			<td><input type="text" name="first_name"/></td>
+			<td>
+				<select name="first_name_op" onchange="$('.first_name_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="fragment" selected="true">includes</option>
+					<option value="soundslike">sounds like</option>
+					<option value="begins">begins with</option>
+					<option value="ends">ends with</option>
+					<option value="equals">is exactly</option>
+					<option value="range">is between</option>
+					<optgroup label="matches pattern">
+						<option value="like">% wildcard</option>
+						<option value="rlike">reg exp</option>
+					</optgroup>
+				</select>
+			</td>
+			<td style="white-space: nowrap;">
+				<input class="first_name_initial" type="text" name="first_name"/>
+			</td>
+		</tr>
+		<tr class="first_name_extra extra" style="display:none">
+			<td colspan="2" style="text-align:right;font-style:italic;">and</td>
+			<td style="white-space: nowrap;">
+				<input type="text" name="first_name_end"/>
+			</td>
 		</tr>
 		<tr>
 			<td>Last&nbsp;name</td>
-			<td><input type="text" name="last_name"/></td>
+			<td>
+				<select name="last_name_op" onchange="$('.last_name_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="fragment" selected="true">includes</option>
+					<option value="soundslike">sounds like</option>
+					<option value="begins">begins with</option>
+					<option value="ends">ends with</option>
+					<option value="equals">is exactly</option>
+					<option value="range">is between</option>
+					<optgroup label="matches pattern">
+						<option value="like">% wildcard</option>
+						<option value="rlike">reg exp</option>
+					</optgroup>
+				</select>
+			</td>
+			<td style="white-space: nowrap;">
+				<input class="last_name_initial" type="text" name="last_name"/>
+			</td>
 		</tr>
-		<tr>
-			<td>Owner, Purchaser, etc.</td>
-			<td><input type="text" name="owner_purchaser_etc"/></td>
+		<tr class="last_name_extra extra" style="display:none">
+			<td colspan="2" style="text-align:right;font-style:italic;">and</td>
+			<td style="white-space: nowrap;">
+				<input type="text" name="last_name_end"/>
+			</td>
 		</tr>
 		<tr>
 			<td>Mother</td>
-			<td><input type="text" name="mother"/></td>
+			<td>
+				<select name="mother_op" onchange="$('.mother_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="fragment" selected="true">includes</option>
+					<option value="soundslike">sounds like</option>
+					<option value="begins">begins with</option>
+					<option value="ends">ends with</option>
+					<option value="equals">is exactly</option>
+					<option value="range">is between</option>
+					<optgroup label="matches pattern">
+						<option value="like">% wildcard</option>
+						<option value="rlike">reg exp</option>
+					</optgroup>
+				</select>
+			</td>
+			<td style="white-space: nowrap;">
+				<input class="mother_initial" type="text" name="mother"/>
+			</td>
+		</tr>
+		<tr class="mother_extra extra" style="display:none">
+			<td colspan="2" style="text-align:right;font-style:italic;">and</td>
+			<td style="white-space: nowrap;">
+				<input type="text" name="mother_end"/>
+			</td>
 		</tr>
 		<tr>
-			<td colspan="2" style="text-align:left;font-weight:normal;">
-				<input type="checkbox" name="use_soundex" value="1"/>
-				Find similar sounding names too.
+			<td>Owner</td>
+			<td>
+				<select name="owner_op" onchange="$('.owner_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="fragment" selected="true">includes</option>
+					<option value="soundslike">sounds like</option>
+					<option value="begins">begins with</option>
+					<option value="ends">ends with</option>
+					<option value="equals">is exactly</option>
+					<option value="range">is between</option>
+					<optgroup label="matches pattern">
+						<option value="like">% wildcard</option>
+						<option value="rlike">reg exp</option>
+					</optgroup>
+				</select>
+			</td>
+			<td style="white-space: nowrap;">
+				<input class="owner_initial" type="text" name="owner_purchaser_etc"/>
+			</td>
+		</tr>
+		<tr class="owner_extra extra" style="display:none">
+			<td colspan="2" style="text-align:right;font-style:italic;">and</td>
+			<td style="white-space: nowrap;">
+				<input type="text" name="owner_end"/>
 			</td>
 		</tr>
 		<tr>

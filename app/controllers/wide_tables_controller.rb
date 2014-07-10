@@ -88,6 +88,7 @@ class WideTablesController < ApplicationController
     values = []
     @search_terms = ''
 
+=begin
     if params[:first_name] != nil and params[:first_name] != ''
       str += ' and ' if str != ''
       if params[:use_soundex] == '1'
@@ -132,6 +133,16 @@ class WideTablesController < ApplicationController
       @search_terms += ', ' if @search_terms != ''
       @search_terms += "mother = #{params[:mother]}"
     end
+=end
+
+    # these were previously single params w/o second (relation selector) params and optional third params (for range end).
+    # relation was constant 'contains', but is now variable with selector second param.
+
+    str = stringFieldSubcontroller(str, values, 'first_name', params[:first_name], params[:first_name_end], params[:first_name_op], 'First name')
+    str = stringFieldSubcontroller(str, values, 'last_name', params[:last_name], params[:last_name_end], params[:last_name_op], 'Last name')
+    str = stringFieldSubcontroller(str, values, 'owner', params[:owner_purchaser_etc], params[:owner_end], params[:owner_op], 'owner, purchaser, etc')
+    str = stringFieldSubcontroller(str, values, 'mother', params[:mother], params[:mother_end], params[:mother_op], 'mother')
+
     if params[:birth_year] != nil and params[:birth_year] != ''
       start = params[:birth_year].to_i
       stop = start
@@ -208,9 +219,9 @@ class WideTablesController < ApplicationController
       @search_terms += ', ' if @search_terms != ''
       @search_terms += "Source table = #{r_str}"
     end
-    
+
     conditions = [str] + values
-    
+ 
     @wide_tables = WideTable.find(:all, :conditions => conditions)
         # if @wide_tables were an AR::Relation object, we could end preceding line:  .page(params[:page]).per( params['perpage'] ) . . .
     @nResultsTotal = @wide_tables.length
@@ -438,4 +449,62 @@ class WideTablesController < ApplicationController
     render :file => 'wide_tables/_show_comments.js.erb'
   end
 
+def stringFieldSubcontroller(str, values, fieldname, operand1, operand2, operator, engFieldname)
+  case operator
+  when 'range'
+    if (operand1 != '' || operand2 != '')
+      @search_terms += ', ' if @search_terms != ''
+      @search_terms += "#{engFieldname} between #{operand1} and #{operand2}"
+      str += ' and ' if str != ''
+      str += '('
+
+      if operand1 != '' && operand2 != ''
+        str += "#{fieldname} between ? and ?"
+        values << operand1
+        values << operand2 
+      elsif operand1 != ''
+        str += "#{fieldname} >= ?"
+        values << operand1 
+      elsif operand2 != ''
+        str += "#{fieldname} <= ?"
+        values << operand2 
+      # else assert or fail
+      end
+
+      str += ')'
+    end
+
+  else
+  if operand1 != '' # so any other operator w data supplied
+    @search_terms += ', ' if @search_terms != ''
+    @search_terms += "#{engFieldname} #{operator} = #{operand1}"
+    str += ' and ' if str != ''
+
+    case operator
+    when 'fragment'
+      operand1 = "%#{operand1}%"
+    when 'begins'
+      operand1 = "#{operand1}%"
+    when 'ends'
+      operand1 = "%#{operand1}"
+    #already ok:  'equals', 'like', 'rlike', 'soundslike'
+    end
+
+    case operator
+    when 'fragment', 'begins', 'ends' 
+      operator = 'like'
+    when 'equals'
+      operator = '='
+    when 'soundslike'
+      operator = 'sounds like'
+    #already ok:  'like', 'rlike'
+    end
+
+    str += "#{fieldname} #{operator} ?"
+    values << operand1
+  end
+  end
+
+  return str
+end
 end 

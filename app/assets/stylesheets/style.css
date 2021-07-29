@@ -14,11 +14,17 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	padding: 4px;
 }
 table.tablesorter thead tr .header {
-	background-image: url(bg.gif);
+	/* background-image: url(bg.gif); */
 	background-repeat: no-repeat;
 	background-position: center right;
 	cursor: pointer;
 }
+table.tablesorter thead tr .header::after {
+	/* http://www.unicode.org/charts/PDF/U2190.pdf */
+	font-size: 10pt;
+	content:"\0021d5"; /* closed=&21F3; open=&#21D5; from http://www.unicode.org/charts/PDF/U2190.pdf */
+}
+	content:"";
 table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
@@ -28,11 +34,13 @@ table.tablesorter tbody td {
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
-table.tablesorter thead tr .headerSortUp {
-	background-image: url(asc.gif);
+table.tablesorter thead tr .headerSortUp::after {
+	/* background-image: url(asc.gif); */
+	content:"\0021d1"; /* closed=&#21E7; open=&#21D1; from http://www.unicode.org/charts/PDF/U2190.pdf */
 }
-table.tablesorter thead tr .headerSortDown {
-	background-image: url(desc.gif);
+table.tablesorter thead tr .headerSortDown::after {
+	/* background-image: url(desc.gif); */
+	content:"\0021d3"; /* closed=&#21E9; open=&#21D3; from http://www.unicode.org/charts/PDF/U2190.pdf */
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;

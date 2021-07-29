@@ -12,6 +12,8 @@ th {
 	width:  25%;
 	float: left;
 	padding-left: 5px;
+	min-width:  fit-content;
+	overflow: auto;
 }
 .alert, .notice, .login {
 	padding-left: 10px;
@@ -26,6 +28,7 @@ th {
 	overflow: auto;
 	padding: 5px;
 /*	border: 1px solid;	*/
+}
 }
 #search_results {
 /*	width: 100%;*/

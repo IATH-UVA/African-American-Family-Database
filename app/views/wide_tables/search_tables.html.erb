@@ -25,16 +25,14 @@
 			<td>First&nbsp;name</td>
 			<td>
 				<select name="first_name_op" onchange="$('.first_name_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="equals">is</option>
 					<option value="fragment" selected="true">includes</option>
-					<option value="soundslike">sounds like</option>
-					<option value="begins">begins with</option>
-					<option value="ends">ends with</option>
-					<option value="equals">is exactly</option>
-					<option value="range">is between</option>
-					<optgroup label="matches pattern">
-						<option value="like">% wildcard</option>
-						<option value="rlike">reg exp</option>
-					</optgroup>
+					<option value="begins">begins</option>
+					<option value="ends">ends</option>
+					<option value="range">between</option>
+					<option value="like">wildcard</option>
+					<option value="rlike">regex</option>
+					<option value="soundslike">sound</option>
 				</select>
 			</td>
 			<td style="white-space: nowrap;">
@@ -51,16 +49,14 @@
 			<td>Last&nbsp;name</td>
 			<td>
 				<select name="last_name_op" onchange="$('.last_name_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="equals">is</option>
 					<option value="fragment" selected="true">includes</option>
-					<option value="soundslike">sounds like</option>
-					<option value="begins">begins with</option>
-					<option value="ends">ends with</option>
-					<option value="equals">is exactly</option>
-					<option value="range">is between</option>
-					<optgroup label="matches pattern">
-						<option value="like">% wildcard</option>
-						<option value="rlike">reg exp</option>
-					</optgroup>
+					<option value="begins">begins</option>
+					<option value="ends">ends</option>
+					<option value="range">between</option>
+					<option value="like">wildcard</option>
+					<option value="rlike">regex</option>
+					<option value="soundslike">sound</option>
 				</select>
 			</td>
 			<td style="white-space: nowrap;">
@@ -77,16 +73,14 @@
 			<td>Mother</td>
 			<td>
 				<select name="mother_op" onchange="$('.mother_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="equals">is</option>
 					<option value="fragment" selected="true">includes</option>
-					<option value="soundslike">sounds like</option>
-					<option value="begins">begins with</option>
-					<option value="ends">ends with</option>
-					<option value="equals">is exactly</option>
-					<option value="range">is between</option>
-					<optgroup label="matches pattern">
-						<option value="like">% wildcard</option>
-						<option value="rlike">reg exp</option>
-					</optgroup>
+					<option value="begins">begins</option>
+					<option value="ends">ends</option>
+					<option value="range">between</option>
+					<option value="like">wildcard</option>
+					<option value="rlike">regex</option>
+					<option value="soundslike">sound</option>
 				</select>
 			</td>
 			<td style="white-space: nowrap;">
@@ -103,16 +97,14 @@
 			<td>Owner</td>
 			<td>
 				<select name="owner_op" onchange="$('.owner_extra').css('display', (-1 < this.value.indexOf('range')) ? 'table-row' : 'none');">
+					<option value="equals">is</option>
 					<option value="fragment" selected="true">includes</option>
-					<option value="soundslike">sounds like</option>
-					<option value="begins">begins with</option>
-					<option value="ends">ends with</option>
-					<option value="equals">is exactly</option>
-					<option value="range">is between</option>
-					<optgroup label="matches pattern">
-						<option value="like">% wildcard</option>
-						<option value="rlike">reg exp</option>
-					</optgroup>
+					<option value="begins">begins</option>
+					<option value="ends">ends</option>
+					<option value="range">between</option>
+					<option value="like">wildcard</option>
+					<option value="rlike">regex</option>
+					<option value="soundslike">sound</option>
 				</select>
 			</td>
 			<td style="white-space: nowrap;">
@@ -129,26 +121,26 @@
 			<td>Birth&nbsp;Year</td>
 			<td>
 				<select name="birth_year_op" onchange="$('#birth_year_end').css('display', (this.value === 'range') ? 'inline' : 'none')">
-					<option value="equals" selected="true">is exactly</option>
-					<option value="range">is between</option>
+					<option value="equals" selected="true">is</option>
+					<option value="range">between</option>
 				</select>
 			</td>
 			<td style="white-space: nowrap;">
-				<input type="text" name="birth_year" size="10"/>
-				<span id="birth_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="birth_year_end" size="10"/></span>
+				<input type="text" name="birth_year" size="4"/>
+				<span id="birth_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="birth_year_end" size="4"/></span>
 			</td>
 		</tr>
 		<tr>
 			<td>Rec&nbsp;Year</td>
 			<td>
 				<select name="record_year_op" onchange="$('#record_year_end').css('display', (this.value === 'range') ? 'inline' : 'none')">
-					<option value="equals" selected="true">is exactly</option>
-					<option value="range">is between</option>
+					<option value="equals" selected="true">is</option>
+					<option value="range">between</option>
 				</select>
 			</td>
 			<td style="white-space: nowrap;">
-				<input type="text" name="record_year" size="10"/>
-				<span id="record_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="record_year_end" size="10"/></span>
+				<input type="text" name="record_year" size="4"/>
+				<span id="record_year_end" class="extra" style="display:none">&nbsp;&dash;&nbsp;<input type="text" name="record_year_end" size="4"/></span>
 			</td>
 		</tr>
 		<tr>
@@ -170,31 +162,42 @@
 			<td colspan="3">Source</td>
 		</tr>
 		<% @tables.each do |t|%>
+		<% stripped = t.title.gsub('(','').gsub(')','')  %>
 		<tr>
 			<td colspan="3" style="white-space: nowrap;">
-				<input type="checkbox" name="tables[]" value="<%= t.id %>" title="(<%= t.id %>)<%= t.title%>">
-				(<%= t.id %>)&nbsp;<%= t.title%>
+				<input type="checkbox" name="tables[]" value="<%= t.id %>" title="<%= t.id %> <%= stripped%>">
+				<%= t.id %>&nbsp;<%= stripped%>
 			</td>
 		</tr>
 		<% end %>
-		<tr>
-			<td>Search&nbsp;Terms</td>
+		<!--tr>
+			<td>Search&nbsp;Terms&nbsp;include</td>
 			<td colspan="2" style="text-align:right;">
 				<select name="search_terms_op" onchange="$('.search_terms_extra').css('display', (0 == this.value.indexOf('freetext')) ? 'table-row' : 'none');">
-
-					<option value="no_freetext" selected="true">include only the terms above</option>
+					<option value="no_freetext" selected="true">only the terms above</option>
 					<optgroup label="advanced">
-						<option value="freetext">include also these additional terms:</option>
+						<option value="freetext">also these terms:</option>
 					</optgroup>
 				</select>
 			</td>
-		</tr>
+		</tr-->
+		<tr><td colspan="3">
+			<div style="float:left;">Search&nbsp;Terms&nbsp;include</div>
+			<div style="float:left;text-align:right;">
+				<select name="search_terms_op" onchange="$('.search_terms_extra').css('display', (0 == this.value.indexOf('freetext')) ? 'table-row' : 'none');">
+					<option value="no_freetext" selected="true">only the terms above</option>
+					<optgroup label="advanced">
+						<option value="freetext">also these terms:</option>
+					</optgroup>
+				</select>
+			</div>
+		</td></tr>
 		<tr class="search_terms_extra extra" style="display:none">
 			<td colspan="3" style="white-space: nowrap;">
 				<textarea name="search_terms" cols="50" rows="5"></textarea>
 			</td>
 		</tr>
-		<tr>
+		<!--tr>
 			<td>Order&nbsp;Results</td>
 			<td colspan="2" style="text-align:right;">
 				<select name="results_order_op" onchange="$('.results_order_extra').css('display', (0 == this.value.indexOf('freetext')) ? 'table-row' : 'none');">
@@ -204,7 +207,18 @@
 					</optgroup>
 				</select>
 			</td>
-		</tr>
+		</tr-->
+		<tr><td colspan="3">
+			<div style="float:left;">Order&nbsp;Results</div>
+			<div style="float:left;text-align:right;">
+				<select name="results_order_op" onchange="$('.results_order_extra').css('display', (0 == this.value.indexOf('freetext')) ? 'table-row' : 'none');">
+					<option value="no_freetext" selected="true">in database record order</option>
+					<optgroup label="advanced">
+						<option value="freetext">by these database fields:</option>
+					</optgroup>
+				</select>
+			</div>
+		</td></tr>
 		<tr class="results_order_extra extra" style="display:none">
 			<td colspan="3" style="white-space: nowrap;">
 				<textarea name="results_order" cols="50" rows="5"></textarea>

@@ -235,7 +235,8 @@ class WideTablesController < ApplicationController
         search_terms_error_message = verify_search_terms(params[:search_terms])
         @error_message += search_terms_error_message
         if @error_message == ''
-          str = str + ' and ( '
+          str = str + ' and ' if str != ''
+          str = str + ' ( '
           str = str + params[:search_terms]
           str = str + ' )'
         end
@@ -598,11 +599,11 @@ def verify_results_order(results_order)
     case pieces.length
     when 1,2
       case pieces[0]
-      when 'src_table_row_num','src_table_id','record_year','first_name','last_name','birth_year','race','gender','owner','location_person','mother','father'
+      when 'src_table_row_num','src_table_id','record_year','first_name','last_name','birth_year','race','gender','owner','location_person','mother','father','topic_type','topic_ord','topic_title','age','birthplace','household','family_role','marital_status','occupation','dwelling','ability_to_write','ability_to_read','status','minister','family','record_date','husband','wife','record','school','division','value','birth_month','disposition','purchaser','legatee','deaf','value_notes','age_group','comments'
         error_message1 += sep + ' ' + pieces[0]
       else
         errors = errors + 1
-        error_message0 += "\n" + errors.to_s + ': expecting one of these:  src_table_row_num,src_table_id,record_year,first_name,last_name,birth_year,race,gender,owner,location_person,mother,father'
+        error_message0 += "\n" + errors.to_s + ': expecting one of these:  src_table_row_num,src_table_id,record_year,first_name,last_name,birth_year,race,gender,owner,location_person,mother,father,topic_type,topic_ord,topic_title,age,birthplace,household,family_role,marital_status,occupation,dwelling,ability_to_write,ability_to_read,status,minister,family,record_date,husband,wife,record,school,division,value,birth_month,disposition,purchaser,legatee,deaf,value_notes,age_group,comments'
         error_message1 += sep + ' ' + errors.to_s + '^ ' + pieces[0]
       end
       case pieces.length
